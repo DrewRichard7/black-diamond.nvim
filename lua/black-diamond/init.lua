@@ -3,15 +3,19 @@ local palette = require("black-diamond.palette").colors
 
 -- Default configuration
 local default_config = {
-	transparent = false, -- Disabled by default
+	transparent = false,
 }
 
-M.config = default_config
+M.config = vim.deepcopy(default_config)
 
+-- 1. Setup just saves the config
 function M.setup(opts)
-	-- Merge user config with defaults
 	M.config = vim.tbl_deep_extend("force", default_config, opts or {})
+end
 
+-- 2. Load actually applies the highlights
+function M.load()
+	-- Clear existing highlights
 	if vim.g.colors_name then
 		vim.cmd("hi clear")
 	end
@@ -19,56 +23,47 @@ function M.setup(opts)
 	vim.o.termguicolors = true
 	vim.g.colors_name = "black-diamond"
 
-	-- Determine background colors based on config
+	-- Resolve transparency
 	local main_bg = palette.bg
 	local float_bg = palette.bg_float
-	local gutter_bg = palette.bg -- Usually matches main bg
+	local gutter_bg = palette.bg
 
 	if M.config.transparent then
 		main_bg = "NONE"
-		-- We usually keep float_bg opaque for readability, but you can set it to "NONE" if you prefer
-		-- float_bg = "NONE"
 		gutter_bg = "NONE"
 	end
 
 	local groups = {
 		-- UI HIGHLIGHTS -----------------------------------------------------------
 		Normal = { fg = palette.fg, bg = main_bg },
-		NormalNC = { fg = palette.fg, bg = main_bg }, -- Inactive windows
+		NormalNC = { fg = palette.fg, bg = main_bg },
 		NormalFloat = { fg = palette.fg, bg = float_bg },
 		FloatBorder = { fg = palette.cyan, bg = float_bg },
 
-		-- Line Numbers and Gutter
 		LineNr = { fg = palette.fg_gutter, bg = gutter_bg },
 		CursorLineNr = { fg = palette.cyan, bold = true, bg = gutter_bg },
-		SignColumn = { bg = gutter_bg }, -- Column for git signs/diagnostics
+		SignColumn = { bg = gutter_bg },
 
-		-- Cursor
 		CursorLine = { bg = palette.bg_highlight },
 		Cursor = { fg = palette.bg, bg = palette.cyan },
 
-		-- Search and Visual
 		Visual = { bg = palette.bg_visual },
 		Search = { fg = palette.bg, bg = palette.cyan },
 		IncSearch = { fg = palette.bg, bg = palette.orange },
 
-		-- Status Line and Borders
 		StatusLine = { fg = palette.fg, bg = palette.bg_dark },
 		StatusLineNC = { fg = palette.fg_comment, bg = palette.bg_dark },
 		VertSplit = { fg = palette.border, bg = main_bg },
 		WinSeparator = { fg = palette.border, bg = main_bg },
 
-		-- Pmenu (Autocompletion)
 		Pmenu = { fg = palette.fg, bg = float_bg },
 		PmenuSel = { fg = palette.fg, bg = palette.bg_visual, bold = true },
 		PmenuThumb = { bg = palette.fg_comment },
 
-		-- Git Signs (Ensure background matches gutter)
 		GitSignsAdd = { fg = palette.green, bg = gutter_bg },
 		GitSignsChange = { fg = palette.cyan, bg = gutter_bg },
 		GitSignsDelete = { fg = palette.red, bg = gutter_bg },
 
-		-- Diagnostics
 		DiagnosticError = { fg = palette.red, bg = gutter_bg },
 		DiagnosticWarn = { fg = palette.orange, bg = gutter_bg },
 		DiagnosticInfo = { fg = palette.cyan, bg = gutter_bg },
@@ -85,7 +80,6 @@ function M.setup(opts)
 
 		Identifier = { fg = palette.pink },
 		Function = { fg = palette.cyan },
-
 		Statement = { fg = palette.yellow },
 		Conditional = { fg = palette.yellow },
 		Repeat = { fg = palette.yellow },
@@ -93,18 +87,15 @@ function M.setup(opts)
 		Operator = { fg = palette.yellow },
 		Keyword = { fg = palette.yellow },
 		Exception = { fg = palette.red },
-
 		PreProc = { fg = palette.violet },
 		Include = { fg = palette.yellow },
 		Define = { fg = palette.violet },
 		Macro = { fg = palette.violet },
 		PreCondit = { fg = palette.violet },
-
 		Type = { fg = palette.violet },
 		StorageClass = { fg = palette.yellow },
 		Structure = { fg = palette.violet },
 		Typedef = { fg = palette.violet },
-
 		Special = { fg = palette.cyan },
 		SpecialChar = { fg = palette.cyan },
 		Tag = { fg = palette.cyan },
@@ -116,39 +107,29 @@ function M.setup(opts)
 		["@variable"] = { fg = palette.pink },
 		["@variable.builtin"] = { fg = palette.orange },
 		["@variable.parameter"] = { fg = palette.purple },
-
 		["@constant"] = { fg = palette.red },
 		["@constant.builtin"] = { fg = palette.red },
-
 		["@module"] = { fg = palette.fg },
 		["@label"] = { fg = palette.cyan },
-
 		["@string"] = { fg = palette.green },
 		["@string.regexp"] = { fg = palette.green },
-
 		["@function"] = { fg = palette.cyan },
 		["@function.builtin"] = { fg = palette.cyan },
 		["@function.call"] = { fg = palette.cyan },
 		["@function.macro"] = { fg = palette.cyan },
-
 		["@constructor"] = { fg = palette.yellow },
 		["@method"] = { fg = palette.cyan },
-
 		["@keyword"] = { fg = palette.yellow },
 		["@keyword.function"] = { fg = palette.yellow },
 		["@keyword.operator"] = { fg = palette.yellow },
 		["@keyword.return"] = { fg = palette.yellow },
-
 		["@operator"] = { fg = palette.yellow },
-
 		["@punctuation.delimiter"] = { fg = palette.fg_comment },
 		["@punctuation.bracket"] = { fg = palette.fg_comment },
-
 		["@property"] = { fg = palette.fg },
 		["@tag"] = { fg = palette.cyan },
 		["@tag.attribute"] = { fg = palette.orange },
 		["@tag.delimiter"] = { fg = palette.fg_comment },
-
 		["@type"] = { fg = palette.violet },
 		["@type.builtin"] = { fg = palette.violet },
 	}
