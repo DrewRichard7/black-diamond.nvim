@@ -27,9 +27,9 @@ M.colors = {
 	-- UI grays
 	line = "#0b0e13",
 	comment = "#8ea7c7",
-	comment_dim = "#8ea7c74d",
-	selection = "#11b7d440",
-	selection_dim = "#11b7d415",
+	comment_dim = "#536882",
+	selection = "#11b7d4",
+	selection_dim = "#11b7d4", -- or maybe a darker variant if you like
 	gutter = "#343f4f",
 	gutter_active = "#8597b0",
 
