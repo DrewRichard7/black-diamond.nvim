@@ -1,5 +1,5 @@
 local M = {}
-local palette = require("bearded-diamond.palette").colors
+local palette = require("black-diamond.palette").colors
 
 function M.setup()
 	-- Reset highlights
@@ -8,7 +8,7 @@ function M.setup()
 	end
 
 	vim.o.termguicolors = true
-	vim.g.colors_name = "bearded-diamond"
+	vim.g.colors_name = "black-diamond"
 
 	local groups = {
 		-- UI HIGHLIGHTS -----------------------------------------------------------

@@ -1,5 +1,6 @@
-package.loaded["bearded-diamond"] = nil
-package.loaded["bearded-diamond.palette"] = nil
-package.loaded["bearded-diamond.init"] = nil
+-- colors/black-diamond.lua
+package.loaded["black-diamond"] = nil
+package.loaded["black-diamond.palette"] = nil
+package.loaded["black-diamond.init"] = nil
 
-require("bearded-diamond.init").setup()
+require("black-diamond.init").setup()
