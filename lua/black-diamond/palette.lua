@@ -10,7 +10,7 @@ M.colors = {
 	bg_highlight = "#1b252f",
 
 	-- Originally #324256 (Visual Selection)
-	bg_visual = "#324256",
+	bg_visual = "#263242",
 
 	fg = "#c5cfdc", -- default text
 	fg_dark = "#a5b5c9", -- darker text

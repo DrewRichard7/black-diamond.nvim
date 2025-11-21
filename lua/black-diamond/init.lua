@@ -39,6 +39,8 @@ function M.load()
 		NormalNC = { fg = palette.fg, bg = main_bg },
 		NormalFloat = { fg = palette.fg, bg = float_bg },
 		FloatBorder = { fg = palette.cyan, bg = float_bg },
+		NonText = { fg = palette.bg },
+		Whitespace = { fg = palette.bg },
 
 		LineNr = { fg = palette.fg_gutter, bg = gutter_bg },
 		CursorLineNr = { fg = palette.cyan, bold = true, bg = gutter_bg },
@@ -50,6 +52,7 @@ function M.load()
 		Visual = { bg = palette.bg_visual },
 		Search = { fg = palette.bg, bg = palette.cyan },
 		IncSearch = { fg = palette.bg, bg = palette.orange },
+		MatchParen = { fg = palette.bg, bg = palette.cyan, bold = true },
 
 		StatusLine = { fg = palette.fg, bg = palette.bg_dark },
 		StatusLineNC = { fg = palette.fg_comment, bg = palette.bg_dark },
